@@ -1,0 +1,30 @@
+reset;
+
+printf "Start";
+
+model WarpShoes.mod;
+
+printf "Model";
+
+data WarpShoes.dat;
+
+printf "Data";
+
+option solver gurobi;
+
+solve;
+
+printf "Solved MF\n";
+
+printf "Profit: %f\n", profit;
+
+for {i in I}{
+	printf "%s: %d	Demand: %f\n",i, x[i], D[i];
+}
+
+for {w in W}{
+	printf "Warehouse %d: %d\n", w, y[w];
+	
+}
+display profit, x, y, x.rc, demand.dual, budget.dual, machine_hours.dual, warehouse_cap.dual,  demand.slack, budget.slack, machine_hours.slack, warehouse_cap.slack > WarpShoes.out;
+close WarpShoes.out; 

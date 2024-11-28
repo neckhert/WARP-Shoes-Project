@@ -25,4 +25,3 @@ read table table6;
 table table7 "ODBC" "WARP2011W.mdb" "Machine_Master":
 	J <- [Machine_Num], a~ OpCost_per_min;
 read table table7;
-

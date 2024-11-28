@@ -1,25 +1,25 @@
 reset;
 
-printf "Start";
+printf "Start\n";
 
 model WarpShoes.mod;
 
-printf "Model";
+printf "Read Model\n";
 
 data WarpShoes.dat;
 
-printf "Data";
+printf "Read Data\n";
 
 option solver gurobi;
 
 solve;
 
-printf "Solved MF\n";
+printf "Solved\n";
 
 printf "Profit: %f\n", profit;
 
 for {i in I}{
-	printf "%s: %d	Demand: %f\n",i, x[i], D[i];
+	printf "%s: %f	Demand: %f\n",i, x[i], D[i];
 }
 
 for {w in W}{
@@ -27,6 +27,34 @@ for {w in W}{
 	
 }
 
+#Binding/Violated Constraints
+printf "\nBinding Constraints:\n";
+
+print "Demand:";
+for {i in I}{
+	if (demand[i].slack == 0) then
+		printf "\n\t%s demand is binding.", i;
+}
+
+printf "\nRaw Materials Budget: ";
+if (budget.slack==0) then
+	printf "\n\tBudget is binding";
+	
+printf "\nMachine Hours: ";
+for {j in J}{
+	if machine_hours[j].slack==0 then
+		printf "\n\tMachine %s hours is binding.", j;
+}
+
+printf "\nWarehouse Cap:";
+if warehouse_cap.slack == 0 then
+	printf "\n\t Warehouse Capacity is binding";
+
+printf "\nRaw Materials Quantity";
+for {k in K}{
+	if raw_materials_quant[k].slack == 0 then
+		printf "\n\Raw material %s quantity is binding.", k;
+}
+
 display profit, x, y, x.rc, demand.dual, budget.dual, machine_hours.dual, warehouse_cap.dual, raw_materials_quant.dual, demand.slack, budget.slack, machine_hours.slack, warehouse_cap.slack, raw_materials_quant.slack > WarpShoes.out; 
 close WarpShoes.out; 
-

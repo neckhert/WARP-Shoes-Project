@@ -7,7 +7,7 @@
  param D{i in I}:= 2*d[i];
  param n{I,K} default 0; #number of rm per shoe
  param p{K}; #cost per rm
- param m{i in I}:= sum{k in K} n[i,k]*p[k]; #cost of  xmaterials per shoe
+ param m{i in I}:= sum{k in K} n[i,k]*p[k]; #cost of  materials per shoe
  param t{I,J} default 0; #time to manufacture per shoe per machine (s)
  param T{i in I, j in J}:= t[i,j]/3600; #time or hours worked by the people.
  param s{I}; #profit per shoe sold

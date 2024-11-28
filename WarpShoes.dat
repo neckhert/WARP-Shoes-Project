@@ -15,13 +15,14 @@ table table4 "ODBC" "WARP2011W.mdb" "BOM":
 read table table4;
 
 table table5 "ODBC" "WARP2011W.mdb" "RM_Master":
-	K <- [RM_Num], p ~ Cost;
+	K <- [RM_Num], p ~ Cost, q ~ S_Quantity;
 read table table5;
 
 table table6 "ODBC" "feb_demand.mdb" "Demand":
 	[Product_Num] d ~ demand;
 read table table6;
 
-table table10 "ODBC" "WARP2011W.mdb" "Machine_Master":
-	J <- [Machine_Num];
-read table table10;
+table table7 "ODBC" "WARP2011W.mdb" "Machine_Master":
+	J <- [Machine_Num], a~ OpCost_per_min;
+read table table7;
+

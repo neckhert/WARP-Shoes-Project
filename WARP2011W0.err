@@ -1,0 +1,9 @@
+/COM,ANSYS RELEASE 2024 R2           BUILD 24.2      UP20240603       17:37:30
+
+ *** ERROR ***                           CP =       0.516   TIME= 17:37:36
+ Data file W:\MIE262\Project\WARP2011W.db has incorrect format, is       
+ missing READ/WRITE permission, or is empty for RESUME.                  
+
+ *** WARNING ***                         CP =       0.516   TIME= 17:37:36
+ WHILE PROCESSING FILE BASED INPUT (/INPUT OR MACRO) AN ERROR HAS        
+ OCCURRED.  SHOULD INPUT PROCESSING BE SUSPENDED?                        

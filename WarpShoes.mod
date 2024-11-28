@@ -30,7 +30,7 @@
  
 s.t. demand {i in I}: x[i] <= D[i];
 s.t. budget : sum {i in I} x[i] * m[i] <= 10000000;
-s.t. machine_hours {j in J}: sum {i in I} T[i,j] * x[i] <= 1209600/3600;
-s.t. warehouse_cap : sum  {i in I} x[i] <= sum {w in W} c[w] * y[w];
+s.t. machine_hours {j in J}: sum {i in I} T[i,j] * x[i] <= 336;
+s.t. warehouse_cap : sum  {i in I} x[i]- (sum {w in W} c[w] * y[w]) <= 0;
 s.t. raw_materials_quant {k in K}: sum{i in I} x[i]*n[i,k] <= q[k];
   

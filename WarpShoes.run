@@ -27,6 +27,6 @@ for {w in W}{
 	
 }
 
-display profit, x> WarpShoes.out;# y, x.rc, demand.dual, budget.dual, machine_hours.dual, warehouse_cap.dual,  demand.slack, budget.slack, machine_hours.slack, warehouse_cap.slack 
+display profit, x, y, x.rc, demand.dual, budget.dual, machine_hours.dual, warehouse_cap.dual, raw_materials_quant.dual, demand.slack, budget.slack, machine_hours.slack, warehouse_cap.slack, raw_materials_quant.slack > WarpShoes.out; 
 close WarpShoes.out; 
 

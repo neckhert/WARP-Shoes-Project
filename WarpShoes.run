@@ -18,14 +18,14 @@ printf "Solved\n";
 
 printf "Profit: %f\n", profit;
 
-for {i in I}{
-	printf "%s: %f	Demand: %f\n",i, x[i], D[i];
-}
+#for {i in I}{
+	#printf "%s: %f	Demand: %f\n",i, x[i], D[i];
+#}
 
-for {w in W}{
-	printf "Warehouse %d: %d\n", w, y[w];
+#for {w in W}{
+	#printf "Warehouse %d: %d\n", w, y[w];
 	
-}
+#}
 
 #Binding/Violated Constraints
 printf "\nBinding Constraints:\n";
@@ -56,5 +56,48 @@ for {k in K}{
 		printf "\n\Raw material %s quantity is binding.", k;
 }
 
-display profit, x, y, x.rc, demand.dual, budget.dual, machine_hours.dual, warehouse_cap.dual, raw_materials_quant.dual, demand.slack, budget.slack, machine_hours.slack, warehouse_cap.slack, raw_materials_quant.slack > WarpShoes.out; 
+printf "After Rounding: " >WarpShoesAfterRounding.out;
+
+let {i in I} x[i] := round(x[i]);
+
+printf "\n\nOptimal Profit %f", (sum {i in I} s[i] * x[i])
+ 					- (25* sum {i in I, j in J} T[i,j]*x[i])
+ 					- (sum {i in I} 10 * (D[i] - x[i]))
+ 					- (sum {w in W} y[w] * h[w])
+ 					- (sum {i in I} x[i] * m[i])
+ 					- (sum{j in J, i in I} a[j]*60 * T[i,j]*x[i])>WarpShoesAfterRounding.out;
+
+printf "\n\n Objective Function Values: " >WarpShoesAfterRounding.out;
+
+for {i in I}{
+	printf "\n\t%s: %f", i, x[i] >WarpShoesAfterRounding.out;
+}
+
+printf "\n\nViolated Constraints" >WarpShoesAfterRounding.out;
+
+printf "\nDemand:" >WarpShoesAfterRounding.out;
+for {i in I}{
+	if (x[i] > D[i]) then
+		printf "\n\t%s demand is violated.", i >WarpShoesAfterRounding.out;
+}
+printf "\nRaw Materials Quantity">WarpShoesAfterRounding.out;
+for {k in K}{
+	if (sum{i in I} x[i]*n[i,k] > q[k]) then
+		printf "\n\Raw material %s quantity is violated.", k >WarpShoesAfterRounding.out;
+}
+printf "\nRaw Materials Budget: ">WarpShoesAfterRounding.out;
+if (sum {i in I} x[i] * m[i] > 10000000) then
+	printf "\n\tBudget is violated">WarpShoesAfterRounding.out;
+printf "\nMachine Hours: ">WarpShoesAfterRounding.out;
+for {j in J}{
+	if sum {i in I} T[i,j] * x[i] > 336 then
+		printf "\n\tMachine %s hours is violated.", j>WarpShoesAfterRounding.out;
+}
+printf "\nWarehouse Cap:">WarpShoesAfterRounding.out;
+if  sum  {i in I} x[i]- (sum {w in W} c[w] * y[w]) > 0 then
+	printf "\n\t Warehouse Capacity is violated">WarpShoesAfterRounding.out;
+
+
+
+display "Before Rounding", profit, x, y, x.rc, demand.dual, budget.dual, machine_hours.dual, warehouse_cap.dual, raw_materials_quant.dual, demand.slack, budget.slack, machine_hours.slack, warehouse_cap.slack, raw_materials_quant.slack > WarpShoes.out; 
 close WarpShoes.out; 
